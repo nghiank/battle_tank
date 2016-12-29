@@ -63,7 +63,7 @@ void UTankAimingComponent::AimAt(const FVector& hitLocation, float launchSpeed) 
 	}
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* barrel) {
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrel) {
 	Barrel = barrel;
 }
 
@@ -72,6 +72,6 @@ void UTankAimingComponent::MoveBarrelTowards(const FVector& aimDirection) {
 	auto AimAsRotator = aimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	UE_LOG(LogTemp, Warning, TEXT("Aiming rotator = %s"), *DeltaRotator.ToString());
-	//Barrel->Elevate(5);
+	Barrel->Elevate(5);
 
 }
