@@ -35,8 +35,16 @@ ATank*  ATankAIController::GetPlayerTank() const {
 		UE_LOG(LogTemp, Warning, TEXT("Not able to get Tank"));
 		return NULL;
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Tank Got!!"));
+	//UE_LOG(LogTemp, Warning, TEXT("Tank Got!!"));
 
 	return tank;
 }
 
+void ATankAIController::Tick(float DeltaSeconds) {
+	Super::Tick(DeltaSeconds);
+	ATank* player = GetPlayerTank();
+	if (!player) {
+		return;
+	}
+	GetControlledTank()->AimAt(player->GetActorLocation());
+}

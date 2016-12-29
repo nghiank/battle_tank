@@ -21,8 +21,7 @@ void ATankPlayerController::BeginPlay() {
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {
-	Super::Tick(DeltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("Player control Tick %f"), DeltaTime);
+	Super::Tick(DeltaTime);	
 	AimTowordsCrosshair();
 }
 
@@ -32,11 +31,42 @@ void ATankPlayerController::AimTowordsCrosshair() {
 		return;
 	}
 
-	FVector HitLocation;
-	UE_LOG(LogTemp, Warning, TEXT("HitLocation=%s"),*HitLocation.ToString());
+	FVector hitLocation;
+	if (GetSightRayHitLocation(hitLocation)) {
+		GetControlledTank()->AimAt(hitLocation);
+	}
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& hitLocation) const {
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
+	FVector WorldDirection;
+	if (GetLookDirection(ScreenLocation, WorldDirection)) {
+		//UE_LOG(LogTemp, Warning, TEXT("world direction=%s"), *WorldDirection.ToString());
+		if (GetLookVectorHitLocation(WorldDirection, hitLocation)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ATankPlayerController::GetLookDirection(const FVector2D& screenLocation, FVector& lookDirection) const{
+	FVector WorldLocation;
+	DeprojectScreenPositionToWorld(screenLocation.X, screenLocation.Y, WorldLocation, lookDirection);
 	return true;
+}
+bool ATankPlayerController::GetLookVectorHitLocation(const FVector& lookDirection, FVector& hitLocation) const{
+	FHitResult OutHit;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	//UE_LOG(LogTemp, Warning, TEXT("Look direction:%s"), *lookDirection.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("Starting Location:%s"), *StartLocation.ToString());
+	auto EndLocation = StartLocation + lookDirection * LineTraceRange;
+	//UE_LOG(LogTemp, Warning, TEXT("End Location:%s"), *EndLocation.ToString());
+	if (GetWorld()->LineTraceSingleByChannel(OutHit, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility)) {
+		hitLocation = OutHit.Location;
+		return true;
+	}
+	return false;
 }
 
