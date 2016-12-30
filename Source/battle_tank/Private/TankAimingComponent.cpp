@@ -10,6 +10,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
+	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
@@ -38,11 +39,12 @@ void UTankAimingComponent::AimAt(const FVector& hitLocation, float launchSpeed) 
 	if (!Barrel) {
 		return;
 	}
+	/*
 	UE_LOG(LogTemp, Warning, 
 			TEXT("Aiming at Hit Location = %s, tank name=%s, barrel location=%s"), 
 			*hitLocation.ToString(),
 			*this->GetOwner()->GetName(),
-			*this->Barrel->GetComponentLocation().ToString());
+			*this->Barrel->GetComponentLocation().ToString());*/
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("ProjectTile"));
 	FVector EndLocation;
@@ -55,10 +57,10 @@ void UTankAimingComponent::AimAt(const FVector& hitLocation, float launchSpeed) 
 		launchSpeed,
 		false,
 		0.0,
-		0,
-		ESuggestProjVelocityTraceOption::TraceFullPath)) {
+		0.0,
+		ESuggestProjVelocityTraceOption::DoNotTrace)) {
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
-		UE_LOG(LogTemp, Warning, TEXT("Aiming at = %s, tankName=%s"), *AimDirection.ToString(), *GetOwner()->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("Aiming at = %s, tankName=%s"), *AimDirection.ToString(), *GetOwner()->GetName());
 		MoveBarrelTowards(AimDirection);
 	}
 }
@@ -72,6 +74,5 @@ void UTankAimingComponent::MoveBarrelTowards(const FVector& aimDirection) {
 	auto AimAsRotator = aimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	UE_LOG(LogTemp, Warning, TEXT("Aiming rotator = %s"), *DeltaRotator.ToString());
-	Barrel->Elevate(5);
-
+	Barrel->Elevate(DeltaRotator.Pitch);
 }
