@@ -47,4 +47,5 @@ void ATankAIController::Tick(float DeltaSeconds) {
 		return;
 	}
 	GetControlledTank()->AimAt(player->GetActorLocation());
+	GetControlledTank()->Fire();
 }
