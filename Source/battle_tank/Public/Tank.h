@@ -35,7 +35,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = Setup)
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	UTankMovementComponent* TankMovementComponent;
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 private:
