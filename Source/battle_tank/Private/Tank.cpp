@@ -49,7 +49,7 @@ void ATank::Fire() {
 	}
 
 	auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("Tank Fire at %f"), Time);
+	//UE_LOG(LogTemp, Warning, TEXT("Tank Fire at %f"), Time);
 	if (!Barrel) return;
 	FVector Location = Barrel->GetSocketLocation(FName("ProjectTile"));
 	FRotator Rotator = Barrel->GetSocketRotation(FName("ProjectTile"));

@@ -1,5 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+#define ENABLE_VISUAL_LOG 1
 #include "battle_tank.h"
 
 #include "TankPlayerController.h"
@@ -44,8 +44,13 @@ void ATankAIController::Tick(float DeltaSeconds) {
 	Super::Tick(DeltaSeconds);
 	ATank* player = GetPlayerTank();
 	if (!player) {
+		UE_LOG(LogTemp, Error, TEXT("player is NULL"));
 		return;
 	}
+	//UE_LOG(LogTemp, Warning, TEXT("Move Actor"));
+	float AcceptanceRadius = 1.0f;
+	//UE_LOG(LogTemp, Warning, TEXT("Move Actor %s"), *player->GetActorLocation().ToString());
+	MoveToActor(player, AcceptanceRadius);
 	GetControlledTank()->AimAt(player->GetActorLocation());
 	GetControlledTank()->Fire();
 }

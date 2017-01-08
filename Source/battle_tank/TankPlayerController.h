@@ -7,17 +7,16 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class BATTLE_TANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
 public:
-	ATank* GetControlledTank() const;
 	
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank* GetControlledTank() const;
+
 	void BeginPlay() override;
 	void Tick(float DeltaTime) override;
 	void AimTowordsCrosshair();
