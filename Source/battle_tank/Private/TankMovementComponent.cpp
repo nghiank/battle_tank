@@ -39,7 +39,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& velocity, bool bFo
 
 	auto StartLocation = GetOwner()->GetActorLocation();
 	auto EndLocation = GetOwner()->GetActorLocation() + k * 1000;
-	UE_LOG(LogTemp, Warning, TEXT("GetOwnerLocation=%s, EndLocation:%s"), *StartLocation.ToString(), *EndLocation.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("GetOwnerLocation=%s, EndLocation:%s"), *StartLocation.ToString(), *EndLocation.ToString());
 	DrawDebugLine(
 		GetWorld(),
 		StartLocation,
@@ -52,5 +52,5 @@ void UTankMovementComponent::RequestDirectMove(const FVector& velocity, bool bFo
 	
 	auto Throw = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
 	IntendTurnRight(Throw * 1.3);
-	UE_LOG(LogTemp, Warning, TEXT("Name=%s, Throw:%f, FordWard:%f"), *GetOwner()->GetName(), Throw, ForwardThrow);
+	//UE_LOG(LogTemp, Warning, TEXT("Name=%s, Throw:%f, FordWard:%f"), *GetOwner()->GetName(), Throw, ForwardThrow);
 }

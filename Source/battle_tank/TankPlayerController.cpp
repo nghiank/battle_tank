@@ -18,6 +18,14 @@ void ATankPlayerController::BeginPlay() {
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Player control Pawn %s"), *controlledTank->GetName());;
 	}
+
+	auto AimingComponent = controlledTank->FindComponentByClass<UTankAimingComponent>();
+	if (AimingComponent) {
+		FoundAimingComponent(AimingComponent);
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("ATankPlayerController - not able to find AimingComponent"));
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {

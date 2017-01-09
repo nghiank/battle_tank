@@ -12,6 +12,9 @@ class BATTLE_TANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* aimingComponent);
 public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Setup")

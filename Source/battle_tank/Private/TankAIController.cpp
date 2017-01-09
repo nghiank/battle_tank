@@ -16,10 +16,10 @@ void ATankAIController::BeginPlay() {
 
 	auto controlledTank = GetPlayerTank();
 	if (!controlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("AI controller GetControlledPawn return NULL"));;
+		//UE_LOG(LogTemp, Warning, TEXT("AI controller GetControlledPawn return NULL"));;
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("AI control Pawn %s"), *controlledTank->GetName());;
+		//UE_LOG(LogTemp, Warning, TEXT("AI control Pawn %s"), *controlledTank->GetName());;
 	}
 }
 
