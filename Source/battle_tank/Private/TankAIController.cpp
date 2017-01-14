@@ -48,9 +48,9 @@ void ATankAIController::Tick(float DeltaSeconds) {
 		return;
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("Move Actor"));
-	float AcceptanceRadius = 1.0f;
+	float AcceptanceRadius = 1000.0f;
 	//UE_LOG(LogTemp, Warning, TEXT("Move Actor %s"), *player->GetActorLocation().ToString());
-	MoveToActor(player, AcceptanceRadius);
+	MoveToActor(player, AcceptanceRadius, true);
 	GetControlledTank()->AimAt(player->GetActorLocation());
 	GetControlledTank()->Fire();
 }
