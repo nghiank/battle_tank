@@ -18,6 +18,9 @@ class BATTLE_TANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintPure, Category = "Health")
+	float GetHealthPercent();
+
 	void AimAt(const FVector& hitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)

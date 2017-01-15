@@ -8,13 +8,13 @@ UTankTrack::UTankTrack() {
 }
 
 void UTankTrack::BeginPlay() {
-	UE_LOG(LogTemp, Warning, TEXT("BeginPLay UTankTrack"));
+	//UE_LOG(LogTemp, Warning, TEXT("BeginPLay UTankTrack"));
 	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
 void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("OnHit"));
+	//UE_LOG(LogTemp, Warning, TEXT("OnHit"));
 	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::Printf(TEXT("Hit")));
 	ApplySidewayForce();
 	DriveTruck();
@@ -32,7 +32,7 @@ void UTankTrack::ApplySidewayForce() {
 }
 
 void UTankTrack::DriveTruck() {
-	UE_LOG(LogTemp, Warning, TEXT("CurrentThrottle: %f"), CurrentThrottle);
+	//UE_LOG(LogTemp, Warning, TEXT("CurrentThrottle: %f"), CurrentThrottle);
 	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 
@@ -41,7 +41,7 @@ void UTankTrack::DriveTruck() {
 	if (TankRoot) {
 		//UE_LOG(LogTemp, Warning, TEXT("Owner name = %s"), *GetOwner()->GetName());
 		//UE_LOG(LogTemp, Warning, TEXT("Tank Throttle = %f"), Throttle);
-		UE_LOG(LogTemp, Warning, TEXT("Forced Applied= %s"), *ForceApplied.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("Forced Applied= %s"), *ForceApplied.ToString());
 		TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 	}
 }

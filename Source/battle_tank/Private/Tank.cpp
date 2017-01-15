@@ -57,3 +57,23 @@ void ATank::Fire() {
 	Projectile->LaunchProjectile(LaunchSpeed);
 	LastFireTime = FPlatformTime::Seconds();
 }
+
+float ATank::TakeDamage(
+	float DamageAmount,
+	struct FDamageEvent const & DamageEvent,
+	class AController * EventInstigator,
+	AActor * DamageCauser) {
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	auto DamageToApply = FMath::Clamp<int32>(DamageAmount, 0, DamagePoints);
+	UE_LOG(LogTemp, Warning, TEXT("Tank GotDamage = %i"), DamageToApply);
+	CurrentHealth -= DamageToApply;
+	if (CurrentHealth <= 0) {
+		UE_LOG(LogTemp, Warning, TEXT("Tank Die"));
+	}
+
+	return 1.0f;
+}
+
+float ATank::GetHealthPercent() {
+	return (float)CurrentHealth / (float)StartingHealth;
+}
